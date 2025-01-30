@@ -38,4 +38,24 @@ for i in range(4):
 for i in range(1, 5):
     screen.grid_rowconfigure(i, weight=1)
 
+#Funcion para manejar los eventos de los botones 
+def click_button(value):
+    current = eval(screen.get())
+    screen.delete(0, tk.END)
+    screen.insert(0,current + value )
+
+#Funcion para calcular el resultado
+def click_equal():
+    try:
+        result = eval(screen.get())
+        screen.delete(0, tk.END)
+        screen.insert(0, str(result))
+    except:
+        screen.delete(0, tk.END)
+        screen.insert(0, 'Error')
+
+#Funcion para limpiar la pantalla
+def click_clean():
+    screen.delete(0, tk.END)
+
 screen.mainloop()
