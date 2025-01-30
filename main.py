@@ -25,7 +25,7 @@ current_column = 0
 
 
 for button in buttons:
-    tk.Button(screen, text=button, font=('Arial', 18), command=lambda b=button: click_button(b)).grid(
+    tk.Button(root, text=button, font=('Arial', 18), command=lambda b=button: click_button(b)).grid(
         row=current_row, column=current_column, sticky='nsew')
     current_column += 1 
     if current_column > 3:
@@ -34,15 +34,18 @@ for button in buttons:
 
 #Configurar la expansion de la cuadricula para que los botones se ajusten al tamaño de la ventana
 for i in range(4):
-    screen.grid_columnconfigure(i, weight=1)
+    root.grid_columnconfigure(i, weight=1)
 for i in range(1, 5):
-    screen.grid_rowconfigure(i, weight=1)
+    root.grid_rowconfigure(i, weight=1)
 
 #Funcion para manejar los eventos de los botones 
 def click_button(value):
-    current = eval(screen.get())
-    screen.delete(0, tk.END)
-    screen.insert(0,current + value )
+    current = screen.get()
+    if value == '=':
+        click_equal()
+    else:
+        screen.delete(0, tk.END)
+        screen.insert(0, current + value)
 
 #Funcion para calcular el resultado
 def click_equal():
@@ -58,4 +61,13 @@ def click_equal():
 def click_clean():
     screen.delete(0, tk.END)
 
-screen.mainloop()
+
+#Agregar un boton "C" para limpiar la pantalla
+tk.Button(root, text='C', font=('Arial', 18),
+          command=click_clean).grid(row=current_row, column=3, sticky='nsew')
+
+#Agregar un boton "=" para calcular el resultado
+tk.Button(root, text='=', font=('Arial', 18),
+          command=click_equal).grid(row=current_row+1, column=0, columnspan=4, sticky='nsew')
+
+root.mainloop()
